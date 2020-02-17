@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="build addons" basedir="." default="distribution">
+	<target name="distribution">
+		<echo>build elementor ecommerce integration</echo>
+		<zip destfile="target/exm-ecommerce-elementor-${version}.zip">
+			<zipfileset dir="plugin" prefix="exm-ecommerce-elementor" excludes="nbproject/**"/>
+		</zip>
+	</target>
+</project>
