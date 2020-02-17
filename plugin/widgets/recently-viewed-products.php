@@ -225,6 +225,17 @@ class Elementor_oEmbed_Widget extends \Elementor\Widget_Base
 				'return_value' => 'yes',
 				'default' => 'yes',
 			]
+		);
+		$this->add_control(
+			'show_button',
+			[
+				'label' => __( 'Show button', 'plugin-domain' ),
+				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'label_on' => __( 'Show', 'your-plugin' ),
+				'label_off' => __( 'Hide', 'your-plugin' ),
+				'return_value' => 'yes',
+				'default' => 'yes',
+			]
         );
         $this->add_control(
 			'show_price',
@@ -236,7 +247,48 @@ class Elementor_oEmbed_Widget extends \Elementor\Widget_Base
 				'return_value' => 'yes',
 				'default' => 'yes',
 			]
+		);
+		
+		$this->add_control(
+            'button_text',
+            [
+                'label' => __('Button text', 'plugin-name'),
+                'type' => \Elementor\Controls_Manager::TEXT,
+				'placeholder' => __('Enter your button text', 'plugin-name'),
+				'default' => __('Buy now', 'plugin-name')
+            ]
         );
+
+		$this->add_group_control(
+			\Elementor\Group_Control_Typography::get_type(),
+			[
+				'name' => 'product_title_typography',
+				'label' => __( 'Title', 'plugin-domain' ),
+				'scheme' => \Elementor\Scheme_Typography::TYPOGRAPHY_1,
+				'selector' => '{{WRAPPER}} .product .product_title',
+			]
+		);
+		
+		$this->add_group_control(
+			\Elementor\Group_Control_Typography::get_type(),
+			[
+				'name' => 'product_price_typography',
+				'label' => __( 'Price', 'plugin-domain' ),
+				'scheme' => \Elementor\Scheme_Typography::TYPOGRAPHY_1,
+				'selector' => '{{WRAPPER}} .product .product_price',
+			]
+		);
+		
+		$this->add_group_control(
+			\Elementor\Group_Control_Background::get_type(),
+			[
+				'name' => 'product_background',
+				'label' => __( 'Product background', 'plugin-domain' ),
+				'types' => [ 'classic', 'gradient'],
+				'selector' => '{{WRAPPER}} .product',
+			]
+		);
+
         $this->end_controls_section();
 
         $this->start_controls_section(
@@ -307,7 +359,28 @@ class Elementor_oEmbed_Widget extends \Elementor\Widget_Base
                 'placeholder' => __('Sale!', 'plugin-name'),
 
             ]
-        );
+		);
+		$this->add_control(
+			'sale_position',
+			[
+				'label' => __( 'Position', 'plugin-domain' ),
+				'type' => \Elementor\Controls_Manager::SLIDER,
+				'size_units' => ['%' ],
+				'range' => [
+					'%' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'unit' => '%',
+					'size' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .product .sale' => 'top: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
         
         $this->end_controls_section();
     }
@@ -333,6 +406,7 @@ class Elementor_oEmbed_Widget extends \Elementor\Widget_Base
 
     protected function _content_template()
     {
+		$currency_sympol = get_woocommerce_currency_symbol();
 ?>      <div>
             <#
                 var count = settings.product_count;
@@ -340,24 +414,28 @@ class Elementor_oEmbed_Widget extends \Elementor\Widget_Base
                 if (settings.direction === "column") {
                     width = 100;
                 }
+				var currency_symbol = "<?php echo $currency_sympol;?>";
             #>
             <h3 class="title" style="text-align: {{ settings.text_align }}">{{{ settings.title }}}</h3>
             <div style="display: flex; flex-direction: {{ settings.direction }};  justify-content: space-between;">
                 <#
                     for (var i = 0; i < count; i++) {
                         #>
-                        <div class="product" style="background-color: lightgrey; width: {{width}}%; height: 150px; padding:10px; text-align:center; position:relative;">
+                        <div class="product" style="width: {{width}}%; min-height: 250px; padding:10px; text-align:center; position:relative;">
                             <# if ( 'yes' === settings.show_title ) { #>
-			                    <h4 style="background-color: darkgrey; width:100%; height:10px;"></h4>
+			                    <h4 class="product_title" style=" width:100%;">Product title</h4>
 		                    <# } #>
                             <# if ( 'yes' === settings.show_image ) { #>
 			                    <div style="background-color: darkgrey; width:50%; height:50%; margin: 0 auto;" ></div>
 		                    <# } #>
                             <# if ( 'yes' === settings.show_price ) { #>
-			                    <h4 style="background-color: darkgrey; width:80%; height:10px; margin: 0 auto; margin-top: 10px;"></h4>
+			                    <h4 class="product_price" style=" margin: 0 auto; margin-top: 10px;">{{{ currency_symbol }}}24.99</h4>
                             <# } #>
                             <# if ( 'yes' === settings.show_sale ) { #>
-			                    <div class="sale" style="padding: 2px; font-weight: bold; position: absolute;top: 15px; {{ settings.sale_align }}: 0;">{{{ settings.sale_text }}}</div>
+			                    <div class="sale" style="padding: 2px; font-weight: bold; position: absolute; {{ settings.sale_align }}: 0;">{{{ settings.sale_text }}}</div>
+							<# } #>
+							<# if ( 'yes' === settings.show_button ) { #>
+			                    <button class="button" style="margin: 0 auto;">{{{ settings.button_text }}}</button>
 		                    <# } #>
                         </div>
                         <#
