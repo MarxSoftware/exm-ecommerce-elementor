@@ -22,7 +22,7 @@ class Elementor_oEmbed_Widget extends \Elementor\Widget_Base
      */
     public function get_name()
     {
-        return 'oembed';
+        return 'product';
     }
 
     /**
@@ -265,7 +265,7 @@ class Elementor_oEmbed_Widget extends \Elementor\Widget_Base
 				'name' => 'product_title_typography',
 				'label' => __( 'Title', 'plugin-domain' ),
 				'scheme' => \Elementor\Scheme_Typography::TYPOGRAPHY_1,
-				'selector' => '{{WRAPPER}} .product .product_title',
+				'selector' => '{{WRAPPER}} .product .title',
 			]
 		);
 		
@@ -275,7 +275,7 @@ class Elementor_oEmbed_Widget extends \Elementor\Widget_Base
 				'name' => 'product_price_typography',
 				'label' => __( 'Price', 'plugin-domain' ),
 				'scheme' => \Elementor\Scheme_Typography::TYPOGRAPHY_1,
-				'selector' => '{{WRAPPER}} .product .product_price',
+				'selector' => '{{WRAPPER}} .product .price',
 			]
 		);
 		
@@ -336,7 +336,7 @@ class Elementor_oEmbed_Widget extends \Elementor\Widget_Base
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'default' => '#fff',
 				'selectors' => [
-					'{{WRAPPER}} .sale' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .product .sale' => 'color: {{VALUE}}',
 				],
 			]
         );
@@ -347,7 +347,7 @@ class Elementor_oEmbed_Widget extends \Elementor\Widget_Base
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'default' => '#000',
 				'selectors' => [
-					'{{WRAPPER}} .sale' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .product .sale' => 'background-color: {{VALUE}}',
 				],
 			]
         );
@@ -416,23 +416,84 @@ class Elementor_oEmbed_Widget extends \Elementor\Widget_Base
                 }
 				var currency_symbol = "<?php echo $currency_sympol;?>";
             #>
+			<style>
+				.products {
+  					display: flex;
+  					flex-wrap: wrap;
+					flex-direction: {{ settings.direction }};
+				}
+				
+
+				.product {
+					display: flex;
+					flex-direction: column;
+
+					text-align:center;
+					
+					padding: 2%;
+					flex: 1 16%;
+					
+					padding-top: 20px;
+					text-align: center;
+					position: relative;
+
+					margin: auto 2px 2px 2px;
+				}
+
+				.product .image {
+					width: 100%;
+					font-size: 5em;
+					margin: 2px;
+					min-height: 120px;
+					margin: 0 auto;
+				}
+
+				.product .sale {
+					padding: 2px; 
+					font-weight: bold; 
+					position: absolute; 
+					{{ settings.sale_align }}: 0;
+				}
+				
+
+				@media ( max-width: 920px ) {
+					.product {
+						flex: 1 21%;
+					}
+	
+					.products .product:first-child, 
+					.products .product:nth-child(2) {
+						flex: 2 46%;
+					}
+				}
+
+				@media ( max-width: 600px ) {
+					.products {
+						flex-direction: column;
+					}
+					.product {
+						flex: 1 46%;
+					}	
+				}
+				
+			</style>
             <h3 class="title" style="text-align: {{ settings.text_align }}">{{{ settings.title }}}</h3>
-            <div style="display: flex; flex-direction: {{ settings.direction }};  justify-content: space-between;">
+            <div class="products" style2="display: flex; flex-wrap: wrap; flex-direction: {{ settings.direction }};  justify-content: space-between;">
                 <#
                     for (var i = 0; i < count; i++) {
                         #>
-                        <div class="product" style="width: {{width}}%; min-height: 250px; padding:10px; text-align:center; position:relative;">
-                            <# if ( 'yes' === settings.show_title ) { #>
-			                    <h4 class="product_title" style=" width:100%;">Product title</h4>
-		                    <# } #>
+                        <div class="product" style2="width: {{width}}%; min-height: 250px; padding:10px; text-align:center; position:relative;">
                             <# if ( 'yes' === settings.show_image ) { #>
-			                    <div style="background-color: darkgrey; width:50%; height:50%; margin: 0 auto;" ></div>
+			                    <div class="image fa fa-shopping-basket"></div>
+		                    <# } #>
+							<# if ( 'yes' === settings.show_title ) { #>
+			                    <h4 class="title" style=" width:100%;">Product title</h4>
 		                    <# } #>
                             <# if ( 'yes' === settings.show_price ) { #>
-			                    <h4 class="product_price" style=" margin: 0 auto; margin-top: 10px;">{{{ currency_symbol }}}24.99</h4>
+			                    <h4 class="price" style=" margin: 0 auto; margin-top: 10px;">{{{ currency_symbol }}}24.99</h4>
                             <# } #>
                             <# if ( 'yes' === settings.show_sale ) { #>
-			                    <div class="sale" style="padding: 2px; font-weight: bold; position: absolute; {{ settings.sale_align }}: 0;">{{{ settings.sale_text }}}</div>
+			                    <div class="sale" >{{{ settings.sale_text }}}</div>
 							<# } #>
 							<# if ( 'yes' === settings.show_button ) { #>
 			                    <button class="button" style="margin: 0 auto;">{{{ settings.button_text }}}</button>
