@@ -307,7 +307,7 @@ class Elementor_oEmbed_Widget extends \Elementor\Widget_Base
 				'label_on' => __( 'Show', 'your-plugin' ),
 				'label_off' => __( 'Hide', 'your-plugin' ),
 				'return_value' => 'yes',
-				'default' => 'yes',
+				'default' => 'no',
 			]
         );
         $this->add_control(
