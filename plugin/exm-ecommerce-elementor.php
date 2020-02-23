@@ -14,6 +14,8 @@ if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly.
 }
 
+require_once 'functions.php';
+
 /**
  * Main Elementor Test Extension Class
  *
@@ -136,6 +138,15 @@ final class Elementor_Test_Extension
             add_action('admin_notices', [$this, 'admin_notice_missing_main_plugin']);
             return;
         }
+		
+		if (is_plugin_active( 'experience-manager/experience-manager.php' )) {
+			add_action('admin_notices', [$this, 'admin_notice_missing_experience_manager']);
+            return;
+		}
+		if (tma_exm_dependencies_fulfilled(["module-ecommerce"])) {
+			add_action('admin_notices', [$this, 'admin_notice_missing_ecommerce_module']);
+            return;
+		}
 
         // Check for required Elementor version
         if (!version_compare(ELEMENTOR_VERSION, self::MINIMUM_ELEMENTOR_VERSION, '>=')) {
@@ -179,7 +190,35 @@ final class Elementor_Test_Extension
 
         printf('<div class="notice notice-warning is-dismissible"><p>%1$s</p></div>', $message);
     }
+	public function admin_notice_missing_ecommerce_module()
+    {
 
+        if (isset($_GET['activate'])) unset($_GET['activate']);
+
+        $message = sprintf(
+            /* translators: 1: Plugin name 2: Elementor */
+            esc_html__('"%1$s" requires "%2$s" to be installed and activated.', 'exm_ecom_elementor'),
+            '<strong>' . esc_html__('EXM Ecommerce for Elementor', 'exm_ecom_elementor') . '</strong>',
+            '<strong>' . esc_html__('Ecommerce module', 'exm_ecom_elementor') . '</strong>'
+        );
+
+        printf('<div class="notice notice-warning is-dismissible"><p>%1$s</p></div>', $message);
+    }
+
+		public function admin_notice_missing_experience_manager()
+    {
+
+        if (isset($_GET['activate'])) unset($_GET['activate']);
+
+        $message = sprintf(
+            /* translators: 1: Plugin name 2: Elementor */
+            esc_html__('"%1$s" requires "%2$s" to be installed and activated.', 'exm_ecom_elementor'),
+            '<strong>' . esc_html__('EXM Ecommerce for Elementor', 'exm_ecom_elementor') . '</strong>',
+            '<strong>' . esc_html__('Experience Manager', 'exm_ecom_elementor') . '</strong>'
+        );
+
+        printf('<div class="notice notice-warning is-dismissible"><p>%1$s</p></div>', $message);
+    }
     /**
      * Admin notice
      *
@@ -246,7 +285,7 @@ final class Elementor_Test_Extension
         require_once(__DIR__ . '/widgets/recently-viewed-products.php');
 
         // Register widget
-        \Elementor\Plugin::instance()->widgets_manager->register_widget_type(new \Elementor_oEmbed_Widget());
+        \Elementor\Plugin::instance()->widgets_manager->register_widget_type(new ExperienceManager\Ecommerce\Elementor\Widgets\Product_Widget());
     }
 
     /**

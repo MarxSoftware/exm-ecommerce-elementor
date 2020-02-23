@@ -1,5 +1,7 @@
 <?php
 
+namespace ExperienceManager\Ecommerce\Elementor\Widgets;
+
 /**
  * Elementor oEmbed Widget.
  *
@@ -7,7 +9,7 @@
  *
  * @since 1.0.0
  */
-class Elementor_oEmbed_Widget extends \Elementor\Widget_Base
+class Product_Widget extends \Elementor\Widget_Base
 {
 
     /**
@@ -70,18 +72,8 @@ class Elementor_oEmbed_Widget extends \Elementor\Widget_Base
         return ['digital-experience'];
     }
 
-    /**
-     * Register oEmbed widget controls.
-     *
-     * Adds different input fields to allow the user to change and customize the widget settings.
-     *
-     * @since 1.0.0
-     * @access protected
-     */
-    protected function _register_controls()
-    {
-
-        $this->start_controls_section(
+	private function content_controls () {
+		$this->start_controls_section(
             'content_section',
             [
                 'label' => __('Content', 'plugin-name'),
@@ -138,12 +130,10 @@ class Elementor_oEmbed_Widget extends \Elementor\Widget_Base
         );
 
         $this->end_controls_section();
-
-
-
-        
-
-        $this->start_controls_section(
+	}
+	
+	private function style_controls () {
+		 $this->start_controls_section(
 			'section_style',
 			[
 				'label' => __( 'Title', 'plugin-name' ),
@@ -192,7 +182,7 @@ class Elementor_oEmbed_Widget extends \Elementor\Widget_Base
 				'name' => 'content_typography',
 				'label' => __( 'Typography', 'plugin-domain' ),
 				'scheme' => \Elementor\Scheme_Typography::TYPOGRAPHY_1,
-				'selector' => '{{WRAPPER}} .title',
+				'selector' => '{{WRAPPER}} .headline',
 			]
         );
         $this->end_controls_section();
@@ -383,6 +373,26 @@ class Elementor_oEmbed_Widget extends \Elementor\Widget_Base
 		);
         
         $this->end_controls_section();
+	}
+	
+    /**
+     * Register oEmbed widget controls.
+     *
+     * Adds different input fields to allow the user to change and customize the widget settings.
+     *
+     * @since 1.0.0
+     * @access protected
+     */
+    protected function _register_controls()
+    {
+
+        $this->content_controls();
+
+
+		$this->style_controls();
+        
+
+       
     }
 
     /**
@@ -398,9 +408,13 @@ class Elementor_oEmbed_Widget extends \Elementor\Widget_Base
 
         $settings = $this->get_settings_for_display();
 
-        echo '<div class="oembed-elementor-widget">';
-        echo '<h3>' . $settings['title'] . '</h3>';
-
+        echo '<div>';
+        echo '<h3 class="headline" '
+		. 'style="text-align: ' . $settings['text_align'] . '"'
+		. '>';
+		echo $settings['title'] . '</h3>';
+		echo '<div class="products">';
+		echo '</div>';
         echo '</div>';
     }
 
@@ -477,7 +491,7 @@ class Elementor_oEmbed_Widget extends \Elementor\Widget_Base
 				}
 				
 			</style>
-            <h3 class="title" style="text-align: {{ settings.text_align }}">{{{ settings.title }}}</h3>
+            <h3 class="headline" style="text-align: {{ settings.text_align }}">{{{ settings.title }}}</h3>
             <div class="products" style2="display: flex; flex-wrap: wrap; flex-direction: {{ settings.direction }};  justify-content: space-between;">
                 <#
                     for (var i = 0; i < count; i++) {
