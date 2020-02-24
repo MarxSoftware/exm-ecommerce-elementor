@@ -27,8 +27,15 @@ abstract class Ecommerce_Ajax {
 
 		$request = new \TMA\ExperienceManager\TMA_Request();
 		$response = [];
-		$response["value"] = $request->module("module-ecommerce", "/userprofile", $parameters);
-		$response["error"] = false;
-		wp_send_json($response);
+		$values = $request->module("module-ecommerce", "/userprofile", $parameters);
+		if (!$values) {
+			$response["error"] = true;
+			wp_send_json($response);
+		} else {
+			$response["values"] = $values;
+			$response["error"] = false;
+			wp_send_json($response);
+		}
+		
 	}
 }
