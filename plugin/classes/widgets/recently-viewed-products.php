@@ -85,19 +85,19 @@ class Product_Widget extends \Elementor\Widget_Base {
 				]
 		);
 
-		$this->add_control(
-				'products_filter',
-				[
-					'label' => __('Products', 'plugin-domain'),
-					'type' => \Elementor\Controls_Manager::SELECT,
-					'default' => 'popular',
-					'options' => [
-						'popular' => __('Popular in shop', 'plugin-domain'),
-						'recently_views' => __('Recently viewed by user', 'plugin-domain'),
-						'frequently_purchased' => __('Frequently purchased by user', 'plugin-domain'),
-					],
-				]
-		);
+//		$this->add_control(
+//				'products_filter',
+//				[
+//					'label' => __('Products', 'plugin-domain'),
+//					'type' => \Elementor\Controls_Manager::SELECT,
+//					'default' => 'popular',
+//					'options' => [
+//						'popular' => __('Popular in shop', 'plugin-domain'),
+//						'recently_views' => __('Recently viewed by user', 'plugin-domain'),
+//						'frequently_purchased' => __('Frequently purchased by user', 'plugin-domain'),
+//					],
+//				]
+//		);
 		$this->add_control(
 				'product_count',
 				[
@@ -120,6 +120,102 @@ class Product_Widget extends \Elementor\Widget_Base {
 						'row' => __('Horizontal', 'plugin-domain'),
 						'column' => __('Vertical', 'plugin-domain'),
 					],
+				]
+		);
+
+		$this->end_controls_section();
+		
+		$this->start_controls_section(
+				'section_product_content',
+				[
+					'label' => __('Product', 'plugin-name'),
+					'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
+				]
+		);
+		$this->add_control(
+				'show_title',
+				[
+					'label' => __('Show Title', 'plugin-domain'),
+					'type' => \Elementor\Controls_Manager::SWITCHER,
+					'label_on' => __('Show', 'your-plugin'),
+					'label_off' => __('Hide', 'your-plugin'),
+					'return_value' => 'yes',
+					'default' => 'yes',
+				]
+		);
+		$this->add_control(
+				'show_image',
+				[
+					'label' => __('Show Image', 'plugin-domain'),
+					'type' => \Elementor\Controls_Manager::SWITCHER,
+					'label_on' => __('Show', 'your-plugin'),
+					'label_off' => __('Hide', 'your-plugin'),
+					'return_value' => 'yes',
+					'default' => 'yes',
+				]
+		);
+		$this->add_control(
+				'show_button',
+				[
+					'label' => __('Show button', 'plugin-domain'),
+					'type' => \Elementor\Controls_Manager::SWITCHER,
+					'label_on' => __('Show', 'your-plugin'),
+					'label_off' => __('Hide', 'your-plugin'),
+					'return_value' => 'yes',
+					'default' => 'yes',
+				]
+		);
+		$this->add_control(
+				'show_price',
+				[
+					'label' => __('Show price', 'plugin-domain'),
+					'type' => \Elementor\Controls_Manager::SWITCHER,
+					'label_on' => __('Show', 'your-plugin'),
+					'label_off' => __('Hide', 'your-plugin'),
+					'return_value' => 'yes',
+					'default' => 'yes',
+				]
+		);
+
+		$this->add_control(
+				'button_text',
+				[
+					'label' => __('Button text', 'plugin-name'),
+					'type' => \Elementor\Controls_Manager::TEXT,
+					'placeholder' => __('Enter your button text', 'plugin-name'),
+					'default' => __('Buy now', 'plugin-name')
+				]
+		);
+
+		$this->end_controls_section();
+		
+		$this->start_controls_section(
+				'section_sale_content',
+				[
+					'label' => __('Sale', 'plugin-name'),
+					'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
+				]
+		);
+		$this->add_control(
+				'show_sale',
+				[
+					'label' => __('Show sale', 'plugin-domain'),
+					'description' => __('Sales label will only be viewed in products in sale!', 'plugin-domain'),
+					'type' => \Elementor\Controls_Manager::SWITCHER,
+					'label_on' => __('Show', 'your-plugin'),
+					'label_off' => __('Hide', 'your-plugin'),
+					'return_value' => 'yes',
+					'default' => 'no',
+				]
+		);
+		
+		$this->add_control(
+				'sale_text',
+				[
+					'label' => __('Text', 'plugin-name'),
+					'type' => \Elementor\Controls_Manager::TEXT,
+					'placeholder' => __('Sale!', 'plugin-name'),
+					'default' => __('Sale!', 'plugin-name'),
 				]
 		);
 
@@ -182,64 +278,10 @@ class Product_Widget extends \Elementor\Widget_Base {
 		$this->end_controls_section();
 
 		$this->start_controls_section(
-				'section_product',
+				'section_product_style',
 				[
 					'label' => __('Product', 'plugin-name'),
 					'tab' => \Elementor\Controls_Manager::TAB_STYLE,
-				]
-		);
-		$this->add_control(
-				'show_title',
-				[
-					'label' => __('Show Title', 'plugin-domain'),
-					'type' => \Elementor\Controls_Manager::SWITCHER,
-					'label_on' => __('Show', 'your-plugin'),
-					'label_off' => __('Hide', 'your-plugin'),
-					'return_value' => 'yes',
-					'default' => 'yes',
-				]
-		);
-		$this->add_control(
-				'show_image',
-				[
-					'label' => __('Show Image', 'plugin-domain'),
-					'type' => \Elementor\Controls_Manager::SWITCHER,
-					'label_on' => __('Show', 'your-plugin'),
-					'label_off' => __('Hide', 'your-plugin'),
-					'return_value' => 'yes',
-					'default' => 'yes',
-				]
-		);
-		$this->add_control(
-				'show_button',
-				[
-					'label' => __('Show button', 'plugin-domain'),
-					'type' => \Elementor\Controls_Manager::SWITCHER,
-					'label_on' => __('Show', 'your-plugin'),
-					'label_off' => __('Hide', 'your-plugin'),
-					'return_value' => 'yes',
-					'default' => 'yes',
-				]
-		);
-		$this->add_control(
-				'show_price',
-				[
-					'label' => __('Show price', 'plugin-domain'),
-					'type' => \Elementor\Controls_Manager::SWITCHER,
-					'label_on' => __('Show', 'your-plugin'),
-					'label_off' => __('Hide', 'your-plugin'),
-					'return_value' => 'yes',
-					'default' => 'yes',
-				]
-		);
-
-		$this->add_control(
-				'button_text',
-				[
-					'label' => __('Button text', 'plugin-name'),
-					'type' => \Elementor\Controls_Manager::TEXT,
-					'placeholder' => __('Enter your button text', 'plugin-name'),
-					'default' => __('Buy now', 'plugin-name')
 				]
 		);
 
@@ -276,24 +318,13 @@ class Product_Widget extends \Elementor\Widget_Base {
 		$this->end_controls_section();
 
 		$this->start_controls_section(
-				'section_sale',
+				'section_sale_style',
 				[
 					'label' => __('Sale', 'plugin-name'),
 					'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 				]
 		);
-		$this->add_control(
-				'show_sale',
-				[
-					'label' => __('Show sale', 'plugin-domain'),
-					'description' => __('Sales label will only be viewed in products in sale!', 'plugin-domain'),
-					'type' => \Elementor\Controls_Manager::SWITCHER,
-					'label_on' => __('Show', 'your-plugin'),
-					'label_off' => __('Hide', 'your-plugin'),
-					'return_value' => 'yes',
-					'default' => 'no',
-				]
-		);
+		
 		$this->add_control(
 				'sale_align',
 				[
@@ -335,14 +366,7 @@ class Product_Widget extends \Elementor\Widget_Base {
 					],
 				]
 		);
-		$this->add_control(
-				'sale_text',
-				[
-					'label' => __('Text', 'plugin-name'),
-					'type' => \Elementor\Controls_Manager::TEXT,
-					'placeholder' => __('Sale!', 'plugin-name'),
-				]
-		);
+		
 		$this->add_control(
 				'sale_position',
 				[

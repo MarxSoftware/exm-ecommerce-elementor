@@ -166,6 +166,10 @@ final class Elementor_Test_Extension
         //add_action('elementor/controls/controls_registered', [$this, 'init_controls']);
 
         add_action( 'elementor/elements/categories_registered', [$this, 'create_custom_categories'] );
+		
+		if (is_plugin_active( 'woocommerce/woocommerce.php' )) {
+			ExperienceManager\Ecommerce\Ajax\Ecommerce_Ajax_WooCommerce::instance();
+		}
     }
 
     /**
