@@ -15,6 +15,7 @@ if (!defined('ABSPATH')) {
 }
 
 require_once 'functions.php';
+require_once 'ecom-autoload.php';
 
 /**
  * Main Elementor Test Extension Class
@@ -139,11 +140,11 @@ final class Elementor_Test_Extension
             return;
         }
 		
-		if (is_plugin_active( 'experience-manager/experience-manager.php' )) {
+		if (!is_plugin_active( 'experience-manager/experience-manager.php' )) {
 			add_action('admin_notices', [$this, 'admin_notice_missing_experience_manager']);
             return;
 		}
-		if (tma_exm_dependencies_fulfilled(["module-ecommerce"])) {
+		if (!tma_exm_dependencies_fulfilled(["module-ecommerce"])) {
 			add_action('admin_notices', [$this, 'admin_notice_missing_ecommerce_module']);
             return;
 		}
@@ -280,11 +281,7 @@ final class Elementor_Test_Extension
      */
     public function init_widgets()
     {
-
-        // Include Widget files
-        require_once(__DIR__ . '/widgets/recently-viewed-products.php');
-
-        // Register widget
+		// Register widget
         \Elementor\Plugin::instance()->widgets_manager->register_widget_type(new ExperienceManager\Ecommerce\Elementor\Widgets\Product_Widget());
     }
 
