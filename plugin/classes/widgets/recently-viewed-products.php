@@ -11,6 +11,19 @@ namespace ExperienceManager\Ecommerce\Elementor\Widgets;
  */
 class Product_Widget extends \Elementor\Widget_Base {
 
+	public function __construct($data = array(), $args = null) {
+		parent::__construct($data, $args);
+		wp_register_style( 'exm_ecom_elementor', plugins_url( 'exm-ecommerce-elementor/assets/elementor.css' ), [], false );
+		wp_register_script( 'exm_ecom', plugins_url( 'exm-ecommerce-elementor/assets/ecommerce.js' ), [], false );
+	}
+
+	public function get_style_depends () {
+		return ['exm_ecom_elementor'];
+	}
+	public function get_script_depends () {
+		return ['exm_ecom'];
+	}
+
 	/**
 	 * Get widget name.
 	 *
@@ -124,7 +137,7 @@ class Product_Widget extends \Elementor\Widget_Base {
 		);
 
 		$this->end_controls_section();
-		
+
 		$this->start_controls_section(
 				'section_product_content',
 				[
@@ -188,7 +201,7 @@ class Product_Widget extends \Elementor\Widget_Base {
 		);
 
 		$this->end_controls_section();
-		
+
 		$this->start_controls_section(
 				'section_sale_content',
 				[
@@ -208,7 +221,7 @@ class Product_Widget extends \Elementor\Widget_Base {
 					'default' => 'no',
 				]
 		);
-		
+
 		$this->add_control(
 				'sale_text',
 				[
@@ -314,6 +327,14 @@ class Product_Widget extends \Elementor\Widget_Base {
 					'selector' => '{{WRAPPER}} .product',
 				]
 		);
+		$this->add_group_control(
+				\Elementor\Group_Control_Border::get_type(),
+				[
+					'name' => 'border',
+					'label' => __('Border', 'plugin-domain'),
+					'selector' => '{{WRAPPER}} .product',
+				]
+		);
 
 		$this->end_controls_section();
 
@@ -324,7 +345,7 @@ class Product_Widget extends \Elementor\Widget_Base {
 					'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 				]
 		);
-		
+
 		$this->add_control(
 				'sale_align',
 				[
@@ -366,7 +387,7 @@ class Product_Widget extends \Elementor\Widget_Base {
 					],
 				]
 		);
-		
+
 		$this->add_control(
 				'sale_position',
 				[
@@ -441,67 +462,6 @@ class Product_Widget extends \Elementor\Widget_Base {
 			}
 			var currency_symbol = "<?php echo $currency_sympol; ?>";
 			#>
-			<style>
-				.products {
-					display: flex;
-					flex-wrap: wrap;
-					flex-direction: {{ settings.direction }};
-				}
-
-
-				.product {
-					display: flex;
-					flex-direction: column;
-
-					text-align:center;
-
-					padding: 2%;
-					flex: 1 16%;
-
-					padding-top: 20px;
-					text-align: center;
-					position: relative;
-
-					margin: auto 2px 2px 2px;
-				}
-
-				.product .image {
-					width: 100%;
-					font-size: 5em;
-					margin: 2px;
-					min-height: 120px;
-					margin: 0 auto;
-				}
-
-				.product .sale {
-					padding: 2px; 
-					font-weight: bold; 
-					position: absolute; 
-					{{ settings.sale_align }}: 0;
-				}
-
-
-				@media ( max-width: 920px ) {
-					.product {
-						flex: 1 21%;
-					}
-
-					.products .product:first-child, 
-					.products .product:nth-child(2) {
-						flex: 2 46%;
-					}
-				}
-
-				@media ( max-width: 600px ) {
-					.products {
-						flex-direction: column;
-					}
-					.product {
-						flex: 1 46%;
-					}	
-				}
-
-			</style>
 			<h3 class="headline" style="text-align: {{ settings.text_align }}">{{{ settings.title }}}</h3>
 			<div class="products" style2="display: flex; flex-wrap: wrap; flex-direction: {{ settings.direction }};  justify-content: space-between;">
 				<#
@@ -518,7 +478,7 @@ class Product_Widget extends \Elementor\Widget_Base {
 					<h4 class="price" style=" margin: 0 auto; margin-top: 10px;">{{{ currency_symbol }}}24.99</h4>
 					<# } #>
 					<# if ( 'yes' === settings.show_sale ) { #>
-					<div class="sale" >{{{ settings.sale_text }}}</div>
+					<div class="sale" style="{{ settings.sale_align }}: 0;" >{{{ settings.sale_text }}}</div>
 					<# } #>
 					<# if ( 'yes' === settings.show_button ) { #>
 					<button class="button" style="margin: 0 auto;">{{{ settings.button_text }}}</button>

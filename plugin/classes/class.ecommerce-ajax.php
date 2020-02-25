@@ -32,7 +32,20 @@ abstract class Ecommerce_Ajax {
 			$response["error"] = true;
 			wp_send_json($response);
 		} else {
-			$response["values"] = $values;
+			$recentlyViewedProducts = [];
+			$frequentlyPurchasedProducts = [];
+			if (property_exists($values, "recentlyViewedProducts")) {
+				foreach ($values->recentlyViewedProducts as $product) {
+					$recentlyViewedProducts[] = $this->load_product($product->id);
+				}
+			}
+			if (property_exists($values, "frequentlyPurchasedProducts")) {
+				foreach ($values->frequentlyPurchasedProducts as $product) {
+					$frequentlyPurchasedProducts[] = $this->load_product($product->id);
+				}
+			}
+			$response["recentlyViewedProducts"] = $recentlyViewedProducts;
+			$response["frequentlyPurchasedProducts"] = $frequentlyPurchasedProducts;
 			$response["error"] = false;
 			wp_send_json($response);
 		}
