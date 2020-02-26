@@ -33,6 +33,8 @@ abstract class Ecommerce_Ajax {
 
 		if ($count === FALSE || $count === NULL) {
 			$count = 3;
+		} else {
+			$count = intval($count);
 		}
 
 
@@ -61,6 +63,8 @@ abstract class Ecommerce_Ajax {
 				foreach ($random as $product) {
 					$recentlyViewedProducts[] = $this->load_product($product->ID);
 				}
+			} else if (sizeof($recentlyViewedProducts) > $count) {
+				$recentlyViewedProducts = array_slice($recentlyViewedProducts, 0, $count);
 			}
 			if (property_exists($values, "frequentlyPurchasedProducts")) {
 				foreach ($values->frequentlyPurchasedProducts as $product) {
@@ -72,6 +76,8 @@ abstract class Ecommerce_Ajax {
 				foreach ($random as $product) {
 					$frequentlyPurchasedProducts[] = $this->load_product($product->ID);
 				}
+			} else if (sizeof($frequentlyPurchasedProducts) > $count) {
+				$frequentlyPurchasedProducts = array_slice($frequentlyPurchasedProducts, 0, $count);
 			}
 			$response["recentlyViewedProducts"] = $recentlyViewedProducts;
 			$response["frequentlyPurchasedProducts"] = $frequentlyPurchasedProducts;

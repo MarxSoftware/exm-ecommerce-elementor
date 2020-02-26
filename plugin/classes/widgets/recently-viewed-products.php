@@ -20,10 +20,10 @@ class Recently_Viewed_Product_Widget extends Product_Widget {
 	}
 
 	public function get_title() {
-		return __('Recently Viewed Products', 'plugin-name');
+		return __('Recently viewed products', 'plugin-name');
 	}
 	
 	public function get_exm_type () {
-		return "recently-viewd-products";
+		return "recently-viewed-products";
 	}
 }

@@ -1,5 +1,7 @@
 function exm_ecom_domagic(templateElementId, type, count) {
 	console.log("do magic on " + templateElementId);
+	console.log("type" + type);
+	
 	var source = document.getElementById(templateElementId + "_template").innerHTML;
 	var template = Handlebars.compile(source);
 
@@ -16,7 +18,7 @@ function exm_ecom_domagic(templateElementId, type, count) {
 			let product_html = template({product: product});
 			document.querySelector("#" + templateElementId + "_container .products").insertAdjacentHTML('beforeend', product_html);
 		}
-		if ("recently-viewd-products" === type) {
+		if ("recently-viewed-products" === type) {
 			response.recentlyViewedProducts.forEach(insertProductFunction);
 		} else if ("frequently-purchased-products" === type) {
 			response.frequentlyPurchasedProducts.forEach(insertProductFunction);

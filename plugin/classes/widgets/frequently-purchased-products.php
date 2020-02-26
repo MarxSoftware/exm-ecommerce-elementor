@@ -16,11 +16,11 @@ class Frequently_Purchased_Product_Widget extends Product_Widget {
 	}
 
 	public function get_name() {
-		return 'exm_widget_recently_viewed_products';
+		return 'exm_widget_frequently_purchased_products';
 	}
 
 	public function get_title() {
-		return __('Recently Viewed Products', 'plugin-name');
+		return __('Frequently purchased products', 'plugin-name');
 	}
 	
 	public function get_exm_type () {
