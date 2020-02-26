@@ -42,7 +42,8 @@ class Ecommerce_Ajax_WooCommerce extends Ecommerce_Ajax {
 		$product = [
 			"title" => $woo_product->get_title(),
 			"price" => $woo_product->get_price_html(),
-			"sale" => $woo_product->is_on_sale(),
+			"is_sale" => $woo_product->is_on_sale(),
+			"image" => $woo_product->get_image("woocommerce_thumbnail", ['class' => 'image']),
 			"url" => $woo_product->get_permalink()
 		];
 		

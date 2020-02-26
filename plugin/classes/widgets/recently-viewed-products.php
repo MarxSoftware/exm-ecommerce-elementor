@@ -13,14 +13,16 @@ class Product_Widget extends \Elementor\Widget_Base {
 
 	public function __construct($data = array(), $args = null) {
 		parent::__construct($data, $args);
-		wp_register_style( 'exm_ecom_elementor', plugins_url( 'exm-ecommerce-elementor/assets/elementor.css' ), [], false );
-		wp_register_script( 'exm_ecom', plugins_url( 'exm-ecommerce-elementor/assets/ecommerce.js' ), [], false );
+		wp_register_style('exm_ecom_elementor', plugins_url('exm-ecommerce-elementor/assets/elementor.css'), [], false);
+		wp_register_script('exm_handlebars', plugins_url('exm-ecommerce-elementor/assets/handlebars.min-v4.7.3.js'), [], "4.7.3");
+		wp_register_script('exm_ecom', plugins_url('exm-ecommerce-elementor/assets/ecommerce.js'), ['exm_handlebars', 'jquery'], "1.0.0", true);
 	}
 
-	public function get_style_depends () {
+	public function get_style_depends() {
 		return ['exm_ecom_elementor'];
 	}
-	public function get_script_depends () {
+
+	public function get_script_depends() {
 		return ['exm_ecom'];
 	}
 
@@ -441,14 +443,50 @@ class Product_Widget extends \Elementor\Widget_Base {
 
 		$settings = $this->get_settings_for_display();
 
-		echo '<div>';
-		echo '<h3 class="headline" '
-		. 'style="text-align: ' . $settings['text_align'] . '"'
-		. '>';
-		echo $settings['title'] . '</h3>';
-		echo '<div class="products">';
-		echo '</div>';
-		echo '</div>';
+		$element_id = uniqid("exm_ecom");
+		?>
+		<div id="<?php echo $element_id; ?>_container">
+			<h3 class="headline" 'style="text-align: <?php echo $settings['text_align']; ?>" ><?php echo $settings['title'] ?></h3>
+			<div class="products" style="flex-direction: <?php echo $settings['direction']; ?>;">
+			</div>
+		</div>
+		<script id="<?php echo $element_id; ?>_template" type="text/x-handlebars-template">
+			<div class="product">
+			<?php if ( 'yes' === $settings['show_image'] ) { ?>
+				{{{product.image}}}
+			<?php  } ?>
+			<?php  if ( 'yes' === $settings['show_title'] ) { ?>
+				<h4 class="title" style=" width:100%;">{{product.title}}</h4>
+			<?php  } ?>
+			<?php  if ( 'yes' === $settings['show_price'] ) { ?>
+				<h4 class="price" style=" margin: 0 auto; margin-top: 10px;">{{{ product.price }}}</h4>
+			<?php  } ?>
+			<?php  if ( 'yes' === $settings['show_sale'] ) { ?>
+				{{#if product.is_sale}}
+					<div class="sale" style="<?php echo $settings['sale_align'];?>: 0;" ><?php echo $settings['sale_text'];?></div>
+				{{/if}}
+			<?php  } ?>
+			<?php  if ( 'yes' === $settings['show_button'] ) { ?>
+				<button class="button" style="margin: 0 auto;"><?php echo $settings['button_text'];?></button>
+			<?php  } ?>
+			</div>
+		</script>
+		<script type="text/javascript">
+		<?php
+		if (\Elementor\Plugin::$instance->preview->is_preview_mode()) {
+			?>
+				exm_ecom_domagic("<?php echo $element_id; ?>");
+			<?php
+		} else {
+			?>
+				jQuery(function () {
+					exm_ecom_domagic("<?php echo $element_id; ?>");
+				});
+			<?php
+		}
+		?>
+		</script>
+		<?php
 	}
 
 	protected function _content_template() {
@@ -463,7 +501,7 @@ class Product_Widget extends \Elementor\Widget_Base {
 			var currency_symbol = "<?php echo $currency_sympol; ?>";
 			#>
 			<h3 class="headline" style="text-align: {{ settings.text_align }}">{{{ settings.title }}}</h3>
-			<div class="products" style2="display: flex; flex-wrap: wrap; flex-direction: {{ settings.direction }};  justify-content: space-between;">
+			<div class="products" style="flex-direction: {{ settings.direction }};">
 				<#
 				for (var i = 0; i < count; i++) {
 				#>
