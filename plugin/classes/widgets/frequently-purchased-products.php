@@ -9,7 +9,7 @@ namespace ExperienceManager\Ecommerce\Elementor\Widgets;
  *
  * @since 1.0.0
  */
-class Recently_Viewed_Product_Widget extends Product_Widget {
+class Frequently_Purchased_Product_Widget extends Product_Widget {
 
 	public function __construct($data = array(), $args = null) {
 		parent::__construct($data, $args);
@@ -24,6 +24,6 @@ class Recently_Viewed_Product_Widget extends Product_Widget {
 	}
 	
 	public function get_exm_type () {
-		return "recently-viewd-products";
+		return "frequently-purchased-products";
 	}
 }

@@ -8,17 +8,34 @@ namespace ExperienceManager\Ecommerce\Ajax;
  * @author marx
  */
 abstract class Ecommerce_Ajax {
-	
-	public function __construct() {		
+
+	public function __construct() {
 		add_action("wp_ajax_nopriv_exm_ecom_load_products", [$this, "load_products"]);
 		add_action("wp_ajax_exm_ecom_load_products", [$this, "load_products"]);
 	}
 
 	public abstract function load_product($product_id);
-	
-	public function load_products () {
+
+	private function random_products($count) {
+		$args = array(
+			'posts_per_page' => $count,
+			'orderby' => 'rand',
+			'post_type' => 'product');
+
+		$random_products = get_posts($args);
+
+		return $random_products;
+	}
+
+	public function load_products() {
 		$type = filter_input(INPUT_GET, 'type', FILTER_DEFAULT);
-		
+		$count = filter_input(INPUT_GET, 'count', FILTER_DEFAULT);
+
+		if ($count === FALSE || $count === NULL) {
+			$count = 3;
+		}
+
+
 		$parameters = [
 			"userid" => exm_ecom_get_userid(),
 			"site" => tma_exm_get_site()
@@ -39,9 +56,21 @@ abstract class Ecommerce_Ajax {
 					$recentlyViewedProducts[] = $this->load_product($product->id);
 				}
 			}
+			if (sizeof($recentlyViewedProducts) < $count) {
+				$random = $this->random_products($count - sizeof($recentlyViewedProducts));
+				foreach ($random as $product) {
+					$recentlyViewedProducts[] = $this->load_product($product->ID);
+				}
+			}
 			if (property_exists($values, "frequentlyPurchasedProducts")) {
 				foreach ($values->frequentlyPurchasedProducts as $product) {
 					$frequentlyPurchasedProducts[] = $this->load_product($product->id);
+				}
+			}
+			if (sizeof($frequentlyPurchasedProducts) < $count) {
+				$random = $this->random_products($count - sizeof($frequentlyPurchasedProducts));
+				foreach ($random as $product) {
+					$frequentlyPurchasedProducts[] = $this->load_product($product->ID);
 				}
 			}
 			$response["recentlyViewedProducts"] = $recentlyViewedProducts;
@@ -49,6 +78,6 @@ abstract class Ecommerce_Ajax {
 			$response["error"] = false;
 			wp_send_json($response);
 		}
-		
 	}
+
 }
