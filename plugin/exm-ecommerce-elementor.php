@@ -286,8 +286,9 @@ final class Elementor_Test_Extension
     public function init_widgets()
     {
 		// Register widget
-        \Elementor\Plugin::instance()->widgets_manager->register_widget_type(new ExperienceManager\Ecommerce\Elementor\Widgets\Frequently_Purchased_Product_Widget());
-        \Elementor\Plugin::instance()->widgets_manager->register_widget_type(new ExperienceManager\Ecommerce\Elementor\Widgets\Recently_Viewed_Product_Widget());
+        \Elementor\Plugin::instance()->widgets_manager->register_widget_type(new ExperienceManager\Ecommerce\Elementor\Widgets\Frequently_Purchased_Products_Widget());
+        \Elementor\Plugin::instance()->widgets_manager->register_widget_type(new ExperienceManager\Ecommerce\Elementor\Widgets\Recently_Viewed_Products_Widget());
+        \Elementor\Plugin::instance()->widgets_manager->register_widget_type(new ExperienceManager\Ecommerce\Elementor\Widgets\Popular_Products_Widget());
     }
 
     /**

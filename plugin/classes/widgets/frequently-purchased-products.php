@@ -9,7 +9,7 @@ namespace ExperienceManager\Ecommerce\Elementor\Widgets;
  *
  * @since 1.0.0
  */
-class Frequently_Purchased_Product_Widget extends Product_Widget {
+class Frequently_Purchased_Products_Widget extends Product_Widget {
 
 	public function __construct($data = array(), $args = null) {
 		parent::__construct($data, $args);

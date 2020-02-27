@@ -22,6 +22,8 @@ function exm_ecom_domagic(templateElementId, type, count) {
 			response.recentlyViewedProducts.forEach(insertProductFunction);
 		} else if ("frequently-purchased-products" === type) {
 			response.frequentlyPurchasedProducts.forEach(insertProductFunction);
+		} else if ("popular-products" === type) {
+			response.popularProducts.forEach(insertProductFunction);
 		}
 		
 	});

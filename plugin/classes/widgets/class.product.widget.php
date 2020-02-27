@@ -13,7 +13,7 @@ abstract class Product_Widget extends \Elementor\Widget_Base {
 
 	public function __construct($data = array(), $args = null) {
 		parent::__construct($data, $args);
-		wp_register_style('exm_ecom_elementor', plugins_url('exm-ecommerce-elementor/assets/elementor.css'), [], false);
+		wp_register_style('exm_ecom_elementor', plugins_url('exm-ecommerce-elementor/assets/ecommerce.css'), [], false);
 		wp_register_script('exm_handlebars', plugins_url('exm-ecommerce-elementor/assets/handlebars.min-v4.7.3.js'), [], "4.7.3");
 		wp_register_script('exm_ecom', plugins_url('exm-ecommerce-elementor/assets/ecommerce.js'), ['exm_handlebars', 'jquery'], "1.0.0", true);
 	}
@@ -39,7 +39,7 @@ abstract class Product_Widget extends \Elementor\Widget_Base {
 	 * @return string Widget icon.
 	 */
 	public function get_icon() {
-		return 'fa fa-shopping-basket';
+		return 'eicon-products'; //fa fa-shopping-basket';
 	}
 
 	/**

@@ -9,21 +9,21 @@ namespace ExperienceManager\Ecommerce\Elementor\Widgets;
  *
  * @since 1.0.0
  */
-class Recently_Viewed_Products_Widget extends Product_Widget {
+class Popular_Products_Widget extends Product_Widget {
 
 	public function __construct($data = array(), $args = null) {
 		parent::__construct($data, $args);
 	}
 
 	public function get_name() {
-		return 'exm_widget_recently_viewed_products';
+		return 'exm_widget_popular_products';
 	}
 
 	public function get_title() {
-		return __('Recently viewed products', 'plugin-name');
+		return __('Popular products', 'plugin-name');
 	}
 	
 	public function get_exm_type () {
-		return "recently-viewed-products";
+		return "popular-products";
 	}
 }
