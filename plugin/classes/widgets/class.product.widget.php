@@ -464,7 +464,16 @@ abstract class Product_Widget extends \Elementor\Widget_Base {
 	}
 
 	protected function _content_template() {
-		$currency_sympol = get_woocommerce_currency_symbol();
+		
+		$currency_symbol = "$";
+		if (function_exists("get_woocommerce_currency_symbol")) {
+			$currency_sympol = get_woocommerce_currency_symbol();
+		} else if (function_exists("edd_get_currency")) {
+			$currency = edd_get_currency();
+			$currency_symbol = edd_currency_symbol( $currency );
+		}
+		
+		
 		?>      <div>
 			<#
 			var count = settings.product_count;
