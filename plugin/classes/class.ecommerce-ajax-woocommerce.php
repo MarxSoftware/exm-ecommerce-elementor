@@ -51,6 +51,10 @@ class Ecommerce_Ajax_WooCommerce extends Ecommerce_Ajax {
 	public function load_product($product_id) {
 		$woo_product = wc_get_product($product_id);
 
+		if ($woo_product == null || $woo_product === false) {
+			return FALSE;
+		}
+		
 		$product = [
 			"title" => $woo_product->get_title(),
 			"price" => $woo_product->get_price_html(),

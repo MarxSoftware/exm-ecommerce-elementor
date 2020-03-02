@@ -30,10 +30,18 @@ abstract class Ecommerce_Ajax {
 			$count = intval($count);
 		}
 
-		if ($type == "popular-products") {
-			$this->shop_profile($count);
-		} else {
-			$this->user_profile($count);
+		try {
+			if ($type == "popular-products") {
+				$this->shop_profile($count);
+			} else {
+				$this->user_profile($count);
+			}
+		} catch (Exception $ex) {
+			$reponse = [
+				"error" => true,
+				"message" => $ex->getMessage()
+			];
+			wp_send_json($response);
 		}
 	}
 
@@ -43,6 +51,7 @@ abstract class Ecommerce_Ajax {
 			"site" => tma_exm_get_site()
 		];
 
+		wp_send_json($parameters);
 		$request = new \TMA\ExperienceManager\TMA_Request();
 		$response = [];
 		$values = $request->module("module-ecommerce", "/shopprofile", $parameters);
@@ -89,6 +98,7 @@ abstract class Ecommerce_Ajax {
 		$request = new \TMA\ExperienceManager\TMA_Request();
 		$response = [];
 		$values = $request->module("module-ecommerce", "/userprofile", $parameters);
+		
 		if (!$values) {
 			$response["error"] = true;
 			wp_send_json($response);
@@ -97,29 +107,39 @@ abstract class Ecommerce_Ajax {
 			$frequentlyPurchasedProducts = [];
 			if (property_exists($values, "recentlyViewedProducts")) {
 				foreach ($values->recentlyViewedProducts as $product) {
-					$recentlyViewedProducts[] = $this->load_product($product->id);
+					$prod = $this->load_product($product->id);
+					if ($prod !== FALSE) {
+						$recentlyViewedProducts[] = $prod;
+					}
 				}
 			}
 			if (sizeof($recentlyViewedProducts) < $count) {
 				$random = $this->random_products($count - sizeof($recentlyViewedProducts));
 				foreach ($random as $product) {
-					$recentlyViewedProducts[] = $this->load_product($product->ID);
+					$prod = $this->load_product($product->ID);
+					if ($prod !== FALSE) {
+						$recentlyViewedProducts[] = $prod;
+					}
 				}
-//				$recentlyViewedProducts = $this->extend_products($recentlyViewedProducts, $this->random_products, $count);
 			} else if (sizeof($recentlyViewedProducts) > $count) {
 				$recentlyViewedProducts = array_slice($recentlyViewedProducts, 0, $count);
 			}
 			if (property_exists($values, "frequentlyPurchasedProducts")) {
 				foreach ($values->frequentlyPurchasedProducts as $product) {
-					$frequentlyPurchasedProducts[] = $this->load_product($product->id);
+					$prod = $this->load_product($product->id);
+					if ($prod !== FALSE) {
+						$frequentlyPurchasedProducts[] = $prod;
+					}
 				}
 			}
 			if (sizeof($frequentlyPurchasedProducts) < $count) {
 				$random = $this->random_products($count - sizeof($frequentlyPurchasedProducts));
 				foreach ($random as $product) {
-					$frequentlyPurchasedProducts[] = $this->load_product($product->ID);
+					$prod = $this->load_product($product->ID);
+					if ($prod !== FALSE) {
+						$frequentlyPurchasedProducts[] = $prod;
+					}
 				}
-//				$frequentlyPurchasedProducts = $this->extend_products($frequentlyPurchasedProducts, $this->random_products, $count);
 			} else if (sizeof($frequentlyPurchasxedProducts) > $count) {
 				$frequentlyPurchasedProducts = array_slice($frequentlyPurchasedProducts, 0, $count);
 			}
