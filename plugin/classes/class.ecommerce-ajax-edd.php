@@ -53,7 +53,7 @@ class Ecommerce_Ajax_EDD extends Ecommerce_Ajax {
 
 		$product = [
 			"title" => $download->post_title,
-			"price" => edd_currency_filter( edd_format_amount( edd_get_download_price( $product_id ) ) ), //$woo_product->get_price_html(),
+			"price" => edd_currency_filter( edd_format_amount( edd_get_download_price( $product_id ) ) ),
 			"is_sale" => false,
 			"image" => the_post_thumbnail( 'post-thumbnail', ['class' => 'image']),
 			"url" => get_the_permalink($product_id)

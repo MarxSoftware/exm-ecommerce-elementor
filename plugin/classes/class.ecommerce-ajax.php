@@ -51,7 +51,7 @@ abstract class Ecommerce_Ajax {
 			"site" => tma_exm_get_site()
 		];
 
-		wp_send_json($parameters);
+//		wp_send_json($parameters);
 		$request = new \TMA\ExperienceManager\TMA_Request();
 		$response = [];
 		$values = $request->module("module-ecommerce", "/shopprofile", $parameters);
