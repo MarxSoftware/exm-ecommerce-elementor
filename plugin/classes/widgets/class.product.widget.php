@@ -13,13 +13,19 @@ abstract class Product_Widget extends \Elementor\Widget_Base {
 
 	public function __construct($data = array(), $args = null) {
 		parent::__construct($data, $args);
+
+
+		
+		
 		wp_register_style('exm_ecom_elementor', plugins_url('exm-ecommerce-elementor/assets/ecommerce.css'), [], false);
 		wp_register_script('exm_handlebars', plugins_url('exm-ecommerce-elementor/assets/handlebars.min-v4.7.3.js'), [], "4.7.3");
 		wp_register_script('exm_ecom', plugins_url('exm-ecommerce-elementor/assets/ecommerce.js'), ['exm_handlebars', 'jquery'], "1.0.0", true);
+		
+		wp_localize_script('exm_ecom', 'exm_ecom', array('ajax_url' => admin_url('admin-ajax.php')));
 	}
 
-	abstract public function get_exm_type ();
-	
+	abstract public function get_exm_type();
+
 	public function get_style_depends() {
 		return ['exm_ecom_elementor'];
 	}
@@ -426,23 +432,23 @@ abstract class Product_Widget extends \Elementor\Widget_Base {
 		</div>
 		<script id="<?php echo $element_id; ?>_template" type="text/x-handlebars-template">
 			<div class="product">
-			<?php if ( 'yes' === $settings['show_image'] ) { ?>
+			<?php if ('yes' === $settings['show_image']) { ?>
 				{{{product.image}}}
-			<?php  } ?>
-			<?php  if ( 'yes' === $settings['show_title'] ) { ?>
+			<?php } ?>
+			<?php if ('yes' === $settings['show_title']) { ?>
 				<h4 class="title" style=" width:100%;">{{product.title}}</h4>
-			<?php  } ?>
-			<?php  if ( 'yes' === $settings['show_price'] ) { ?>
+			<?php } ?>
+			<?php if ('yes' === $settings['show_price']) { ?>
 				<h4 class="price" style=" margin: 0 auto; margin-top: 10px;">{{{ product.price }}}</h4>
-			<?php  } ?>
-			<?php  if ( 'yes' === $settings['show_sale'] ) { ?>
+			<?php } ?>
+			<?php if ('yes' === $settings['show_sale']) { ?>
 				{{#if product.is_sale}}
-					<div class="sale" style="<?php echo $settings['sale_align'];?>: 0;" ><?php echo $settings['sale_text'];?></div>
+				<div class="sale" style="<?php echo $settings['sale_align']; ?>: 0;" ><?php echo $settings['sale_text']; ?></div>
 				{{/if}}
-			<?php  } ?>
-			<?php  if ( 'yes' === $settings['show_button'] ) { ?>
-				<button class="button" style="margin: 0 auto;"><?php echo $settings['button_text'];?></button>
-			<?php  } ?>
+			<?php } ?>
+			<?php if ('yes' === $settings['show_button']) { ?>
+				<button class="button" style="margin: 0 auto;"><?php echo $settings['button_text']; ?></button>
+			<?php } ?>
 			</div>
 		</script>
 		<script type="text/javascript">
@@ -464,16 +470,14 @@ abstract class Product_Widget extends \Elementor\Widget_Base {
 	}
 
 	protected function _content_template() {
-		
+
 		$currency_symbol = "$";
 		if (function_exists("get_woocommerce_currency_symbol")) {
 			$currency_sympol = get_woocommerce_currency_symbol();
 		} else if (function_exists("edd_get_currency")) {
 			$currency = edd_get_currency();
-			$currency_symbol = edd_currency_symbol( $currency );
+			$currency_symbol = edd_currency_symbol($currency);
 		}
-		
-		
 		?>      <div>
 			<#
 			var count = settings.product_count;

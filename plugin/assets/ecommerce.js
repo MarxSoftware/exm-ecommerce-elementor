@@ -5,7 +5,7 @@ function exm_ecom_domagic(templateElementId, type, count) {
 	var source = document.getElementById(templateElementId + "_template").innerHTML;
 	var template = Handlebars.compile(source);
 
-	fetch(ajaxurl, {
+	fetch(exm_ecom.ajax_url, {
 		method: "POST",
 		mode: "cors",
 		cache: "no-cache",
