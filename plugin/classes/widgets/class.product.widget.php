@@ -455,12 +455,12 @@ abstract class Product_Widget extends \Elementor\Widget_Base {
 		<?php
 		if (\Elementor\Plugin::$instance->preview->is_preview_mode()) {
 			?>
-				exm_ecom_domagic("<?php echo $element_id; ?>", "<?php echo $this->get_exm_type(); ?>", <?php echo $settings['product_count'] ?>);
+				exm_ecom_load_products("<?php echo $element_id; ?>", "<?php echo $this->get_exm_type(); ?>", <?php echo $settings['product_count'] ?>);
 			<?php
 		} else {
 			?>
 				jQuery(function () {
-					exm_ecom_domagic("<?php echo $element_id; ?>", "<?php echo $this->get_exm_type(); ?>", <?php echo $settings['product_count'] ?>);
+					exm_ecom_load_products("<?php echo $element_id; ?>", "<?php echo $this->get_exm_type(); ?>", <?php echo $settings['product_count'] ?>);
 				});
 			<?php
 		}

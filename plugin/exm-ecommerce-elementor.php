@@ -1,13 +1,13 @@
 <?php
 
 /**
- * Plugin Name: Elementor Test Extension
- * Description: Custom Elementor extension.
- * Plugin URI:  https://elementor.com/
+ * Plugin Name: DigitalExperience for Elementor
+ * Description: DigitalExperience for Elementor.
+ * Plugin URI:  https://wp-digitalexperience.com/addons/ecommerce/
  * Version:     1.0.0
- * Author:      Elementor
- * Author URI:  https://elementor.com/
- * Text Domain: elementor-test-extension
+ * Author:      WP-DigitalExperience
+ * Author URI:  https://wp-digitalexperience.com/
+ * Text Domain: dex-ecom-elementor
  */
 
 if (!defined('ABSPATH')) {

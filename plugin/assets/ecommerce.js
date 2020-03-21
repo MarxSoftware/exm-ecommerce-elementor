@@ -1,4 +1,4 @@
-function exm_ecom_domagic(templateElementId, type, count) {
+function exm_ecom_load_products(templateElementId, type, count) {
 	console.log("do magic on " + templateElementId);
 	console.log("type" + type);
 	
