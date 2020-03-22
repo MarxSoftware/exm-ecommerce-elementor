@@ -16,8 +16,6 @@
 	padding-top: 20px;
 	text-align: center;
 	position: relative;
-
-	margin: auto 2px 2px 2px;
 }
 
 .product .image {
@@ -34,6 +32,9 @@
 	position: absolute; 
 }
 
+.product .title {
+	flex: 1;
+}
 
 @media (min-width: 1025px) and (max-width: 1280px) {
 	.product {
