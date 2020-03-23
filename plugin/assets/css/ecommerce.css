@@ -1,0 +1,178 @@
+.exm_ecom {
+  /* spinner end */
+  /* spinner end */
+  /* notify start */
+  /* notify end*/
+  /* loader start */
+  /* loader end */
+}
+.exm_ecom .products {
+  display: flex;
+  flex-wrap: wrap;
+}
+.exm_ecom .product {
+  display: flex;
+  flex-direction: column;
+  padding: 2%;
+  flex: 1 16%;
+  padding-top: 20px;
+  text-align: center;
+  position: relative;
+}
+.exm_ecom .product .image {
+  width: 100%;
+  font-size: 5em;
+  margin: 2px;
+  min-height: 120px;
+  margin: 0 auto;
+}
+.exm_ecom .product .sale {
+  padding: 2px;
+  font-weight: bold;
+  position: absolute;
+}
+.exm_ecom .product .price {
+  flex: 1;
+}
+.exm_ecom .product .title {
+  flex: 1;
+}
+@media (min-width: 1025px) and (max-width: 1280px) {
+  .exm_ecom .product {
+    flex: 1 21%;
+  }
+  .exm_ecom .products .product:first-child,
+  .exm_ecom .products .product:nth-child(2) {
+    flex: 2 46%;
+  }
+}
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  .exm_ecom .products {
+    flex-direction: column;
+  }
+  .exm_ecom .product {
+    flex: 1 46%;
+  }
+}
+@media (min-width: 481px) and (max-width: 767px) {
+  .exm_ecom .products {
+    flex-direction: column;
+  }
+  .exm_ecom .product {
+    flex: 1 46%;
+  }
+}
+@media (min-width: 320px) and (max-width: 480px) {
+  .exm_ecom .products {
+    flex-direction: column;
+  }
+  .exm_ecom .product {
+    flex: 1 100%;
+  }
+}
+.exm_ecom .spinner {
+  margin: 100px auto;
+  width: 50px;
+  height: 40px;
+  text-align: center;
+  font-size: 10px;
+}
+.exm_ecom .spinner > div {
+  background-color: #333;
+  height: 100%;
+  width: 6px;
+  display: inline-block;
+  -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
+  animation: sk-stretchdelay 1.2s infinite ease-in-out;
+}
+.exm_ecom .spinner .rect2 {
+  -webkit-animation-delay: -1.1s;
+  animation-delay: -1.1s;
+}
+.exm_ecom .spinner .rect3 {
+  -webkit-animation-delay: -1s;
+  animation-delay: -1s;
+}
+.exm_ecom .spinner .rect4 {
+  -webkit-animation-delay: -0.9s;
+  animation-delay: -0.9s;
+}
+.exm_ecom .spinner .rect5 {
+  -webkit-animation-delay: -0.8s;
+  animation-delay: -0.8s;
+}
+@-webkit-keyframes sk-stretchdelay {
+  0%,
+  40%,
+  100% {
+    -webkit-transform: scaleY(0.4);
+  }
+  20% {
+    -webkit-transform: scaleY(1);
+  }
+}
+@keyframes sk-stretchdelay {
+  0%,
+  40%,
+  100% {
+    transform: scaleY(0.4);
+    -webkit-transform: scaleY(0.4);
+  }
+  20% {
+    transform: scaleY(1);
+    -webkit-transform: scaleY(1);
+  }
+}
+.exm_ecom .success {
+  background: #03a679;
+  color: #f0f0f0;
+}
+.exm_ecom .failure {
+  background: #ff3939;
+  color: #f0f0f0;
+}
+.exm_ecom .notify {
+  position: relative;
+  top: 0px;
+  width: 100%;
+  height: 0;
+  color: white;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+  box-sizing: border-box;
+  transition: height 0.2s;
+}
+.exm_ecom #exm_ecom_notifyType:before {
+  display: block;
+  margin-top: 15px;
+}
+.exm_ecom .active {
+  height: 50px;
+}
+.exm_ecom .success:before {
+  Content: "Success!";
+}
+.exm_ecom .failure:before {
+  Content: "Something went wrong!";
+}
+@keyframes loader {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.exm_ecom .loader:before {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin-left: -10px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  border-top-color: #07d;
+  border-bottom-color: #07d;
+  animation: loader 0.8s ease infinite;
+}
+/*# sourceMappingURL=ecommerce.css.map */

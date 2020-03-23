@@ -17,7 +17,7 @@ abstract class Product_Widget extends \Elementor\Widget_Base {
 
 		
 		
-		wp_register_style('exm_ecom_elementor', plugins_url('exm-ecommerce-elementor/assets/ecommerce.css'), [], false);
+		wp_register_style('exm_ecom_elementor', plugins_url('exm-ecommerce-elementor/assets/css/ecommerce.css'), [], false);
 		wp_register_script('exm_handlebars', plugins_url('exm-ecommerce-elementor/assets/handlebars.min-v4.7.3.js'), [], "4.7.3");
 		wp_register_script('exm_ecom', plugins_url('exm-ecommerce-elementor/assets/ecommerce.js'), ['exm_handlebars', 'jquery'], "1.0.0", true);
 		
@@ -393,6 +393,29 @@ abstract class Product_Widget extends \Elementor\Widget_Base {
 		);
 
 		$this->end_controls_section();
+		
+		$this->start_controls_section(
+				'section_spinner_style',
+				[
+					'label' => __('Spinner', 'plugin-name'),
+					'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+				]
+		);
+
+		$this->add_control(
+				'spinner_color',
+				[
+					'label' => __('Color', 'plugin-name'),
+					'type' => \Elementor\Controls_Manager::COLOR,
+					'default' => '#333',
+					'selectors' => [
+						'{{WRAPPER}} .products .spinner > div' => 'background-color: {{VALUE}}',
+						'{{WRAPPER}} .loader:before' => 'border-top-color: {{VALUE}}; border-bottom-color: {{VALUE}}'
+					],
+				]
+		);
+
+		$this->end_controls_section();
 	}
 
 	/**
@@ -425,19 +448,29 @@ abstract class Product_Widget extends \Elementor\Widget_Base {
 
 		$element_id = uniqid("exm_ecom");
 		?>
-		<div id="<?php echo $element_id; ?>_container">
+		<div id="<?php echo $element_id; ?>_container" class="exm_ecom">
 			<h3 class="headline" 'style="text-align: <?php echo $settings['text_align']; ?>" ><?php echo $settings['title'] ?></h3>
 			<div class="products" style="flex-direction: <?php echo $settings['direction']; ?>;">
+				<div class="spinner">
+					<div class="rect1"></div>
+					<div class="rect2"></div>
+					<div class="rect3"></div>
+					<div class="rect4"></div>
+					<div class="rect5"></div>
+				</div>
 			</div>
 		</div>
 		<script id="<?php echo $element_id; ?>_template" type="text/x-handlebars-template">
-			<div class="product">
+			<div class="product" data-exm-product-id="{{{product.id}}}">
+				<div class="notify"><span id="exm_ecom_notifyType" class=""></span></div>
+				<a href="{{{product.url}}}">
 			<?php if ('yes' === $settings['show_image']) { ?>
 				{{{product.image}}}
 			<?php } ?>
 			<?php if ('yes' === $settings['show_title']) { ?>
 				<h4 class="title" style=" width:100%;">{{product.title}}</h4>
 			<?php } ?>
+				</a>
 			<?php if ('yes' === $settings['show_price']) { ?>
 				<h4 class="price" style=" margin: 0 auto; margin-top: 10px;">{{{ product.price }}}</h4>
 			<?php } ?>
@@ -447,7 +480,7 @@ abstract class Product_Widget extends \Elementor\Widget_Base {
 				{{/if}}
 			<?php } ?>
 			<?php if ('yes' === $settings['show_button']) { ?>
-				<button class="button" style="margin: 0 auto;"><?php echo $settings['button_text']; ?></button>
+				<div class="button" style="margin: 0 auto;" onClick="exm_ecom_add_to_basket(this, {{{product.id}}}, '{{{product.sku}}}')"><?php echo $settings['button_text']; ?></div>
 			<?php } ?>
 			</div>
 		</script>
@@ -478,7 +511,8 @@ abstract class Product_Widget extends \Elementor\Widget_Base {
 			$currency = edd_get_currency();
 			$currency_symbol = edd_currency_symbol($currency);
 		}
-		?>      <div>
+		?>      
+		<div class="exm_ecom">
 			<#
 			var count = settings.product_count;
 			var width = Math.round(100 / count);

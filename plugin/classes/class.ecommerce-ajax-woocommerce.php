@@ -56,7 +56,9 @@ class Ecommerce_Ajax_WooCommerce extends Ecommerce_Ajax {
 		}
 		
 		$product = [
+			"id" => $product_id,
 			"title" => $woo_product->get_title(),
+			"sku" => $woo_product->get_sku("edit"),
 			"price" => $woo_product->get_price_html(),
 			"is_sale" => $woo_product->is_on_sale(),
 			"image" => $woo_product->get_image("woocommerce_thumbnail", ['class' => 'image']),
