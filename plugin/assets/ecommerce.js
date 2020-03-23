@@ -41,6 +41,8 @@ function exm_ecom_add_to_basket($target, product_id, product_sku) {
 		'quantity': 1
 	};
 
+	jQuery(".product[data-exm-product-id=" + product_id + "] .button").toggleClass("loader");
+	jQuery(".product[data-exm-product-id=" + product_id + "] .button").toggleClass("disabled");
 	// Ajax action.
 	jQuery.post(wc_add_to_cart_params.wc_ajax_url.toString().replace('%%endpoint%%', 'add_to_cart'), data, function (response) {
 		if (!response) {
@@ -60,19 +62,20 @@ function exm_ecom_add_to_basket($target, product_id, product_sku) {
 
 //		$thisbutton.remove('loader');
 
-		jQuery(".product[data-exm-product-id=" + product_id + "] .button").addClass("loader");
+
 		jQuery(".product[data-exm-product-id=" + product_id + "] .notify").toggleClass("active");
-		jQuery(".product[data-exm-product-id=" + product_id + "] #exm_ecom_notifyType").toggleClass("success");
+		jQuery(".product[data-exm-product-id=" + product_id + "] .notify span").toggleClass("success");
 
 		setTimeout(function () {
 			jQuery(".product[data-exm-product-id=" + product_id + "] .notify").removeClass("active");
-			jQuery(".product[data-exm-product-id=" + product_id + "] #exm_ecom_notifyType").removeClass("success");
-			jQuery(".product[data-exm-product-id=" + product_id + "] .button").removeClass("loader");
+			jQuery(".product[data-exm-product-id=" + product_id + "] .notify span").removeClass("success");
 		}, 2000);
 
 
 		// Trigger event so themes can refresh other areas.
 		jQuery(document.body).trigger('added_to_cart', [response.fragments, response.cart_hash]);
+	}).always(function () {
+		jQuery(".product[data-exm-product-id=" + product_id + "] .button").removeClass("loader");
+		jQuery(".product[data-exm-product-id=" + product_id + "] .button").removeClass("disabled");
 	});
-
 }

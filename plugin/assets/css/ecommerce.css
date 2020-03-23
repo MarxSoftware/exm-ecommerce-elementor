@@ -19,6 +19,9 @@
   text-align: center;
   position: relative;
 }
+.exm_ecom .product .button {
+  position: relative;
+}
 .exm_ecom .product .image {
   width: 100%;
   font-size: 5em;
@@ -165,9 +168,11 @@
   content: '';
   box-sizing: border-box;
   position: absolute;
+  top: 50%;
   left: 50%;
   width: 20px;
   height: 20px;
+  margin-top: -10px;
   margin-left: -10px;
   border-radius: 50%;
   border: 2px solid transparent;
