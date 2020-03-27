@@ -26,4 +26,8 @@ class Popular_Products_Widget extends Product_Widget {
 	public function get_exm_type () {
 		return "popular-products";
 	}
+	
+	public function get_icon() {
+		return "recom-popular-products";
+	}
 }

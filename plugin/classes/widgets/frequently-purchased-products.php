@@ -26,4 +26,8 @@ class Frequently_Purchased_Products_Widget extends Product_Widget {
 	public function get_exm_type () {
 		return "frequently-purchased-products";
 	}
+	
+	public function get_icon() {
+		return "recom-recently-products";
+	}
 }

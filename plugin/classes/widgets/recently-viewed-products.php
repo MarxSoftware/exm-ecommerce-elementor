@@ -26,4 +26,8 @@ class Recently_Viewed_Products_Widget extends Product_Widget {
 	public function get_exm_type () {
 		return "recently-viewed-products";
 	}
+	
+	public function get_icon() {
+		return "recom-recent-changes";
+	}
 }

@@ -1,0 +1,49 @@
+@charset "UTF-8";
+
+@font-face {
+  font-family: "recommendation";
+  src:url("fonts/recommendation.eot");
+  src:url("fonts/recommendation.eot?#iefix") format("embedded-opentype"),
+    url("fonts/recommendation.woff") format("woff"),
+    url("fonts/recommendation.ttf") format("truetype"),
+    url("fonts/recommendation.svg#recommendation") format("svg");
+  font-weight: normal;
+  font-style: normal;
+
+}
+
+[data-icon]:before {
+  font-family: "recommendation" !important;
+  content: attr(data-icon);
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  speak: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+[class^="recom-"]:before,
+[class*=" recom-"]:before {
+  font-family: "recommendation" !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  speak: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.recom-recent-changes:before {
+  content: "\61";
+}
+.recom-recently-products:before {
+  content: "\62";
+}
+.recom-popular-products:before {
+  content: "\63";
+}
