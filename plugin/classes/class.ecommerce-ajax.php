@@ -47,14 +47,16 @@ abstract class Ecommerce_Ajax {
 
 	private function shop_profile($count) {
 		$parameters = [
-			"userid" => exm_ecom_get_userid(),
-			"site" => tma_exm_get_site()
+			"query" => [
+				"userid" => exm_ecom_get_userid(),
+				"site" => tma_exm_get_site()
+			]
 		];
 
 //		wp_send_json($parameters);
 		$request = new \TMA\ExperienceManager\TMA_Request();
 		$response = [];
-		$values = $request->module("module-ecommerce", "/shopprofile", $parameters);
+		$values = $request->get("json/profiles/shop", $parameters);
 		if (!$values) {
 			$response["error"] = true;
 			wp_send_json($response);
@@ -90,14 +92,20 @@ abstract class Ecommerce_Ajax {
 
 	private function user_profile($count) {
 		$parameters = [
-			"userid" => exm_ecom_get_userid(),
-			"site" => tma_exm_get_site()
+			"query" => [
+				"userid" => exm_ecom_get_userid(),
+				"site" => tma_exm_get_site()
+			]
 		];
 		//https://exp.wp-digitalexperience.com/rest/module/module-ecommerce/range?name=order_conversion_rate&site=b8ff2cf4-aee7-49eb-9a08-085d9ba20788&end=1577836800000&start=1546732800000
 
 		$request = new \TMA\ExperienceManager\TMA_Request();
 		$response = [];
-		$values = $request->module("module-ecommerce", "/userprofile", $parameters);
+		$values = $request->get("json/profiles/user", $parameters);
+
+		if ($values !== FALSE && (is_object($values) || is_array($values)) && !is_wp_error($values)) {
+			$values = $values['body']; // use the content
+		}
 		
 		if (!$values) {
 			$response["error"] = true;
@@ -105,6 +113,13 @@ abstract class Ecommerce_Ajax {
 		} else {
 			$recentlyViewedProducts = [];
 			$frequentlyPurchasedProducts = [];
+
+			if (property_exists($values, "recentlyViewedProducts")) {
+				tma_exm_log("recentlyViewedProducts");
+			} else {
+				tma_exm_log("no recentlyViewedProducts");
+			}
+
 			if (property_exists($values, "recentlyViewedProducts")) {
 				foreach ($values->recentlyViewedProducts as $product) {
 					$prod = $this->load_product($product->id);

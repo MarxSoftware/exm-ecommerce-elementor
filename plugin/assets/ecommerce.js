@@ -20,10 +20,13 @@ function exm_ecom_load_products(templateElementId, type, count) {
 			document.querySelector("#" + templateElementId + "_container .products").insertAdjacentHTML('beforeend', product_html);
 		};
 		if ("recently-viewed-products" === type) {
+			console.log("recently");
 			response.recentlyViewedProducts.forEach(insertProductFunction);
 		} else if ("frequently-purchased-products" === type) {
+			console.log("frequently");
 			response.frequentlyPurchasedProducts.forEach(insertProductFunction);
 		} else if ("popular-products" === type) {
+			console.log("popular");
 			response.popularProducts.forEach(insertProductFunction);
 		}
 

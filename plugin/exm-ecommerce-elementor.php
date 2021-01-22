@@ -134,12 +134,8 @@ final class Elementor_Test_Extension {
 			return;
 		}
 
-		if (!is_plugin_active('experience-manager/experience-manager.php')) {
+		if (!exm_ecom_is_plugin_active('ecommerce-experience/ecommerce-experience.php')) {
 			add_action('admin_notices', [$this, 'admin_notice_missing_experience_manager']);
-			return;
-		}
-		if (!tma_exm_dependencies_fulfilled(["module-ecommerce"])) {
-			add_action('admin_notices', [$this, 'admin_notice_missing_ecommerce_module']);
 			return;
 		}
 
@@ -161,7 +157,7 @@ final class Elementor_Test_Extension {
 
 		add_action('elementor/elements/categories_registered', [$this, 'create_custom_categories']);
 
-		if (is_plugin_active('woocommerce/woocommerce.php')) {
+		if (exm_ecom_is_plugin_active('woocommerce/woocommerce.php')) {
 			ExperienceManager\Ecommerce\Ajax\Ecommerce_Ajax_WooCommerce::instance();
 		}
 		
