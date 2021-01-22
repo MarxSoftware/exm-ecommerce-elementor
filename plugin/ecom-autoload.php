@@ -3,9 +3,6 @@
 define("EXM_ECOM_DIR", plugin_dir_path(__FILE__));
 
 define("EXM_ECOM_CLASSES", array(
-	"ExperienceManager\Ecommerce\Ajax\Ecommerce_Ajax" => "classes/class.ecommerce-ajax.php",
-	"ExperienceManager\Ecommerce\Ajax\Ecommerce_Ajax_WooCommerce" => "classes/class.ecommerce-ajax-woocommerce.php",
-	"ExperienceManager\Ecommerce\Ajax\Ecommerce_Ajax_EDD" => "classes/class.ecommerce-ajax-edd.php",
 	"ExperienceManager\Ecommerce\Elementor\Widgets\Product_Widget" => "classes/widgets/class.product.widget.php",
 	"ExperienceManager\Ecommerce\Elementor\Widgets\Frequently_Purchased_Products_Widget" => "classes/widgets/frequently-purchased-products.php",
 	"ExperienceManager\Ecommerce\Elementor\Widgets\Recently_Viewed_Products_Widget" => "classes/widgets/recently-viewed-products.php",

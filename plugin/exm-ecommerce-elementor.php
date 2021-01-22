@@ -158,7 +158,7 @@ final class Elementor_Test_Extension {
 		add_action('elementor/elements/categories_registered', [$this, 'create_custom_categories']);
 
 		if (exm_ecom_is_plugin_active('woocommerce/woocommerce.php')) {
-			ExperienceManager\Ecommerce\Ajax\Ecommerce_Ajax_WooCommerce::instance();
+			//ExperienceManager\Ecommerce\Ajax\Ecommerce_Ajax_WooCommerce::instance();
 		}
 		
 //		add_action('wp_enqueue_scripts', [$this, 'add_resources']);
